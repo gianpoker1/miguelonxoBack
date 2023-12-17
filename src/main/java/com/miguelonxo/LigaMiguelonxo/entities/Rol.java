@@ -20,16 +20,12 @@ public class Rol {
     @Column(nullable = false, unique = true, length = 50)
     private String nombre;
 
-    @Column(name = "idUserRol")
-    private Long idUserRol;
-
     public Rol() {
     }
 
 
-    public Rol(String nombre, Long idUserRol) {
+    public Rol(String nombre) {
         this.nombre = nombre;
-        this.idUserRol = idUserRol;
     }
 
 
@@ -47,18 +43,5 @@ public class Rol {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public Long getIdUserRol() {
-        return this.idUserRol;
-    }
-
-    public void setIdUserRol(Long idUserRol) {
-        this.idUserRol = idUserRol;
-    }
-
-
-
-
-    
+    }   
 }

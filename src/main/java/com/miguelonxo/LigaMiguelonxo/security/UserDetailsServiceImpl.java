@@ -32,7 +32,11 @@ public class UserDetailsServiceImpl implements UserDetailsService{
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        System.out.println("Cargando detalles del usuario por correo electrónico: " + username);
+
         User usuario = userRepository.findByEmail(username);
+        System.out.println("Usuario encontrado: " + usuario.getName());
 
         if(usuario == null){
             throw new UsernameNotFoundException("Usuario no encontrado");        }
@@ -44,9 +48,31 @@ public class UserDetailsServiceImpl implements UserDetailsService{
             .orElseThrow(() -> new RuntimeException("Rol no encontrado")))
             .collect(Collectors.toList());
 
+        // Imprimir los roles del usuario
+        /* System.out.println("Roles del usuario:");
+        for (UserRol usuarioRol : usuarioRoles) {
+            Rol rol = rolRepository.findById(usuarioRol.getRol())
+                .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+            System.out.println("- " + rol.getNombre());
+        } */
+
         List<GrantedAuthority> authorities = roles.stream()
             .map(rol ->new SimpleGrantedAuthority(rol.getNombre()))
             .collect(Collectors.toList());
+
+            /* List<GrantedAuthority> authorities = usuarioRoles.stream()
+            .map(usuarioRol -> {
+                Rol rol = rolRepository.findById(usuarioRol.getRol())
+                    .orElseThrow(() -> new RuntimeException("Rol no encontrado"));
+                return new SimpleGrantedAuthority(rol.getNombre());
+            }) 
+            .collect(Collectors.toList());*/
+
+            // Imprimir el rol que se está comparando
+        System.out.println("Rol que se está comparando:");
+        for (GrantedAuthority authority : authorities) {
+            System.out.println("- " + authority.getAuthority());
+        }
 
         return new org.springframework.security.core.userdetails.User(usuario.getEmail(), usuario.getPassword(), authorities);
         

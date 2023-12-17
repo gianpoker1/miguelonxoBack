@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -32,10 +33,17 @@ public class UserController {
         return ResponseEntity.ok(usuarios);
     }
 
-    @PreAuthorize("hasAnyRole('ROLE_PLAYER', 'ROLE_USER', 'ROLE_ADMIN')")
-    @GetMapping("/userName/{username}")
-    public ResponseEntity<User> findByUserName(@PathVariable String username) {
-        User usuario = userService.findByUserName(username);
+    @PreAuthorize("hasAnyRole('ROLE_PLAYER', 'ROLE_ADMIN')")
+    @GetMapping("/email/{email}")
+    public ResponseEntity<User> findByUserName(
+        @PathVariable String email
+        //@RequestHeader(name = "Authorization Header: ") String authorizationHeader
+        ) {
+        // Imprime el encabezado de autorización
+        //System.out.println("Authorization Header: " + authorizationHeader);
+
+
+        User usuario = userService.findByUserName(email);
         if (usuario == null) {
             return ResponseEntity.notFound().build();
         }

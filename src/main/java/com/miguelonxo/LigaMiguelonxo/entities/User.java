@@ -82,16 +82,8 @@ public class User{
         this.name = name;
     }
 
-    public UserRolRepository getUserRolRepository() {
-        return this.userRolRepository;
-    }
-
     public void setUserRolRepository(UserRolRepository userRolRepository) {
         this.userRolRepository = userRolRepository;
-    }
-
-    public RolRepository getRolRepository() {
-        return this.rolRepository;
     }
 
     public void setRolRepository(RolRepository rolRepository) {
